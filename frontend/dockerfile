@@ -1,0 +1,5 @@
+FROM nginx:mainline-bookworm-perl
+
+EXPOSE 80
+
+COPY . /usr/share/nginx/html
