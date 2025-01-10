@@ -6,11 +6,11 @@
     <title>Audio Converter</title>
     <script src="https://unpkg.com/htmx.org"></script>
     <style>
-        /* Global styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #2c3e50; /* Dark blue background */
-            color: white;
+            font-family: 'Minecraft', 'Arial', sans-serif;
+            background-color: #4a4a4a; /* Stone gray */
+            background-image: linear-gradient(to bottom, #2c2f33 0%, #4a4a4a 100%);
+            color: #d3d3d3;
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,42 +18,60 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                #3b3b3b 0px,
+                #3b3b3b 10px,
+                #404040 10px,
+                #404040 20px
+            );
+            opacity: 0.3;
+            z-index: -1;
         }
 
         h1 {
-            font-size: 2.5rem;
-            color: #ecf0f1;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            color: #a0a0a0;
+            text-shadow: 2px 2px 4px #000000;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
         }
 
         form {
-            background-color: #34495e; /* Darker blue for form */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            width: 300px;
+            background-color: #2c2f33;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            width: 350px;
             text-align: center;
+            border: 2px solid #4a4a4a;
         }
 
         input[type="file"] {
-            background-color: #1abc9c; /* Teal background for file input */
-            color: white;
-            padding: 10px;
-            border: none;
+            background-color: #1a1a1a;
+            color: #d3d3d3;
+            padding: 12px;
+            border: 2px solid #4a4a4a;
             border-radius: 5px;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             cursor: pointer;
             font-size: 1rem;
         }
 
-        input[type="file"]:hover {
-            background-color: #16a085;
-        }
-
         input[type="submit"] {
-            background-color: #2980b9; /* Blue background for submit button */
-            color: white;
+            background-color: #4a4a4a;
+            color: #d3d3d3;
             padding: 12px 20px;
             border: none;
             border-radius: 5px;
@@ -64,29 +82,27 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #3498db;
+            background-color: #5a5a5a;
         }
 
         #result {
             margin-top: 20px;
             padding: 15px;
-            background-color: #16a085;
+            background-color: #1a1a1a;
+            border: 2px solid #4a4a4a;
             border-radius: 5px;
-            width: 300px;
+            width: 350px;
             text-align: center;
+            color: #d3d3d3;
         }
     </style>
 </head>
 <body>
-
-    <h1>Upload Audio File</h1>
-
+    <h1>Audio Converter</h1>
     <form hx-post="http://localhost:8080/upload" hx-target="#result" enctype="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" value="Upload and Convert" />
     </form>
-
     <div id="result"></div>
-
 </body>
 </html>

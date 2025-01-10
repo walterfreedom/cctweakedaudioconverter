@@ -7,16 +7,41 @@ import (
 	"os"
 	"strings"
 
+	"golang.org/x/net/websocket"
+
 	ffmpeg "github.com/u2takey/ffmpeg-go"
 )
 
 func main() {
 	http.HandleFunc("/upload", handleUpload)
-
-	fmt.Println("Starting server on :5501...")
+	http.Handle("/echo", websocket.Handler(EchoServer)) // Associates the WebSocket handler with the "/echo" endpoint.
+	fmt.Println("Starting server on :8080...")
 	err := http.ListenAndServe("0.0.0.0:8080", nil)
 	if err != nil {
 		panic(err)
+	}
+
+}
+func EchoServer(ws *websocket.Conn) {
+	defer ws.Close() // Ensure the connection is closed
+	var msg string
+
+	for {
+		// Receive a message from the client
+		err := websocket.Message.Receive(ws, &msg)
+		if err != nil {
+			fmt.Println("Error receiving message:", err)
+			break
+		}
+
+		fmt.Println("Message received:", msg)
+
+		// Echo the message back to the client
+		err = websocket.Message.Send(ws, msg)
+		if err != nil {
+			fmt.Println("Error sending message:", err)
+			break
+		}
 	}
 }
 
